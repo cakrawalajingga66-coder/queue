@@ -1,0 +1,1515 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Media Belajar Antrean (Queue) - Informatika SMA Kelas 10</title>
+  <meta name="description" content="Media pembelajaran interaktif struktur data Queue (Antrean) dengan prinsip FIFO, video edukatif, dan simulasi horizontal interaktif untuk siswa SMA Kelas 10 Fase E." />
+  <meta property="og:title" content="Media Belajar Antrean (Queue) - Informatika SMA Kelas 10" />
+  <meta property="og:description" content="Media pembelajaran interaktif struktur data Queue (Antrean) dengan prinsip FIFO, video edukatif, dan simulasi horizontal interaktif untuk siswa SMA Kelas 10 Fase E." />
+  
+  <style>
+    :root {
+      --primary: #4338ca;
+      --primary-hover: #3730a3;
+      --primary-light: #e0e7ff;
+      --emerald: #059669;
+      --emerald-light: #d1fae5;
+      --amber: #d97706;
+      --amber-light: #fef3c7;
+      --rose: #e11d48;
+      --rose-light: #ffe4e6;
+      --slate-900: #0f172a;
+      --slate-800: #1e293b;
+      --slate-700: #334155;
+      --slate-600: #475569;
+      --slate-500: #64748b;
+      --slate-400: #94a3b8;
+      --slate-200: #e2e8f0;
+      --slate-100: #f1f5f9;
+      --slate-50: #f8fafc;
+      --white: #ffffff;
+      --radius-sm: 8px;
+      --radius-md: 12px;
+      --radius-lg: 16px;
+      --radius-full: 9999px;
+      --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+      --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.08), 0 2px 4px -2px rgba(0, 0, 0, 0.05);
+      --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.08), 0 4px 6px -4px rgba(0, 0, 0, 0.04);
+      --font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: var(--font-family);
+      background-color: #f4f6fb;
+      color: var(--slate-800);
+      line-height: 1.6;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* Container */
+    .app-container {
+      width: 100%;
+      max-width: 1080px;
+      margin: 0 auto;
+      padding: 20px 16px 48px;
+      flex: 1;
+    }
+
+    /* Header */
+    header.main-header {
+      background: linear-gradient(135deg, #312e81 0%, #4338ca 60%, #4f46e5 100%);
+      color: var(--white);
+      border-radius: var(--radius-lg);
+      padding: 24px 28px;
+      margin-bottom: 24px;
+      box-shadow: var(--shadow-md);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .header-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background-color: rgba(255, 255, 255, 0.18);
+      border: 1px solid rgba(255, 255, 255, 0.28);
+      color: #ede9fe;
+      font-size: 0.82rem;
+      font-weight: 600;
+      padding: 4px 12px;
+      border-radius: var(--radius-full);
+      margin-bottom: 10px;
+      letter-spacing: 0.02em;
+    }
+
+    header.main-header h1 {
+      font-size: 1.75rem;
+      font-weight: 700;
+      line-height: 1.25;
+      margin-bottom: 8px;
+      color: #ffffff;
+    }
+
+    header.main-header p {
+      font-size: 0.95rem;
+      color: #c7d2fe;
+      max-width: 680px;
+      margin: 0;
+    }
+
+    /* Tabs Navigation */
+    .nav-tabs {
+      display: flex;
+      gap: 8px;
+      background-color: #e2e8f0;
+      padding: 6px;
+      border-radius: var(--radius-md);
+      margin-bottom: 24px;
+      overflow-x: auto;
+      scrollbar-width: none;
+    }
+    .nav-tabs::-webkit-scrollbar {
+      display: none;
+    }
+
+    .tab-btn {
+      flex: 1;
+      min-width: 170px;
+      padding: 10px 18px;
+      font-size: 0.95rem;
+      font-weight: 600;
+      color: var(--slate-600);
+      background: transparent;
+      border: none;
+      border-radius: var(--radius-sm);
+      cursor: pointer;
+      transition: all 0.2s ease;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      white-space: nowrap;
+    }
+
+    .tab-btn:hover {
+      color: var(--slate-900);
+      background-color: rgba(255, 255, 255, 0.6);
+    }
+
+    .tab-btn.active {
+      color: var(--primary);
+      background-color: var(--white);
+      box-shadow: var(--shadow-sm);
+    }
+
+    /* Content Modules */
+    .tab-panel {
+      display: none;
+      animation: fadeIn 0.25s ease-out;
+    }
+
+    .tab-panel.active {
+      display: block;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(6px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Common Card Styling */
+    .card {
+      background-color: var(--white);
+      border: 1px solid var(--slate-200);
+      border-radius: var(--radius-md);
+      padding: 24px;
+      margin-bottom: 20px;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .card-title {
+      font-size: 1.2rem;
+      font-weight: 700;
+      color: var(--slate-900);
+      margin-bottom: 12px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .card-title .icon {
+      font-size: 1.3rem;
+    }
+
+    /* Tab 1: Materi Styles */
+    .highlight-box {
+      background-color: var(--primary-light);
+      border-left: 4px solid var(--primary);
+      padding: 16px 20px;
+      border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+      margin: 16px 0;
+    }
+
+    .highlight-box strong {
+      color: var(--primary-hover);
+      display: block;
+      font-size: 1.05rem;
+      margin-bottom: 4px;
+    }
+
+    .concept-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 16px;
+      margin: 18px 0;
+    }
+
+    .operation-card {
+      border: 1px solid var(--slate-200);
+      border-radius: var(--radius-sm);
+      padding: 18px;
+      background-color: var(--slate-50);
+      transition: transform 0.15s ease;
+    }
+    .operation-card:hover {
+      transform: translateY(-2px);
+    }
+
+    .op-tag {
+      display: inline-block;
+      padding: 3px 10px;
+      border-radius: var(--radius-full);
+      font-size: 0.75rem;
+      font-weight: 700;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      margin-bottom: 8px;
+    }
+    .op-enqueue {
+      background-color: #dbeafe;
+      color: #1d4ed8;
+      border: 1px solid #bfdbfe;
+    }
+    .op-dequeue {
+      background-color: #dcfce7;
+      color: #15803d;
+      border: 1px solid #bbf7d0;
+    }
+
+    .operation-card h3 {
+      font-size: 1.08rem;
+      color: var(--slate-900);
+      margin-bottom: 6px;
+    }
+
+    .operation-card p {
+      font-size: 0.92rem;
+      color: var(--slate-600);
+    }
+
+    .real-world-list {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 14px;
+      margin-top: 14px;
+    }
+
+    .real-world-item {
+      background: #faf5ff;
+      border: 1px solid #e9d5ff;
+      border-radius: var(--radius-sm);
+      padding: 14px 16px;
+    }
+    .real-world-item h4 {
+      color: #6b21a8;
+      font-size: 0.96rem;
+      margin-bottom: 4px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .real-world-item p {
+      font-size: 0.88rem;
+      color: var(--slate-700);
+    }
+
+    /* Comparison Table */
+    .compare-table-wrapper {
+      overflow-x: auto;
+      margin-top: 16px;
+    }
+    table.compare-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.9rem;
+    }
+    table.compare-table th, table.compare-table td {
+      padding: 12px 14px;
+      border: 1px solid var(--slate-200);
+      text-align: left;
+    }
+    table.compare-table th {
+      background-color: var(--slate-100);
+      color: var(--slate-800);
+      font-weight: 700;
+    }
+    table.compare-table tr:hover td {
+      background-color: var(--slate-50);
+    }
+
+    /* Tab 2: Video Module */
+    .video-wrapper {
+      position: relative;
+      padding-bottom: 56.25%; /* 16:9 ratio */
+      height: 0;
+      overflow: hidden;
+      border-radius: var(--radius-md);
+      background-color: var(--slate-900);
+      box-shadow: var(--shadow-md);
+      margin-bottom: 20px;
+    }
+    .video-wrapper iframe {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      border: 0;
+    }
+
+    .guide-box {
+      background-color: #f0fdf4;
+      border: 1px solid #bbf7d0;
+      border-radius: var(--radius-sm);
+      padding: 18px;
+    }
+    .guide-box h4 {
+      color: #166534;
+      font-size: 1rem;
+      margin-bottom: 10px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .guide-box ol {
+      padding-left: 20px;
+      font-size: 0.92rem;
+      color: #14532d;
+    }
+    .guide-box li {
+      margin-bottom: 8px;
+    }
+
+    /* Tab 3: Interactive Simulation */
+    .sim-metrics-bar {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 12px;
+      margin-bottom: 20px;
+    }
+    @media (max-width: 640px) {
+      .sim-metrics-bar {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    .metric-pill {
+      background: var(--slate-50);
+      border: 1px solid var(--slate-200);
+      border-radius: var(--radius-sm);
+      padding: 12px;
+      text-align: center;
+    }
+    .metric-label {
+      font-size: 0.76rem;
+      text-transform: uppercase;
+      color: var(--slate-500);
+      font-weight: 700;
+      letter-spacing: 0.03em;
+    }
+    .metric-val {
+      font-size: 1.18rem;
+      font-weight: 700;
+      color: var(--slate-900);
+      margin-top: 2px;
+    }
+
+    /* Visual Queue Arena */
+    .queue-stage-card {
+      background: linear-gradient(to bottom, #ffffff, #f8fafc);
+      border: 2px dashed #cbd5e1;
+      border-radius: var(--radius-md);
+      padding: 24px 16px;
+      margin-bottom: 24px;
+      position: relative;
+    }
+
+    .flow-indicators {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 16px;
+      padding: 0 8px;
+      font-size: 0.85rem;
+      font-weight: 700;
+    }
+    .flow-out {
+      color: var(--emerald);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .flow-in {
+      color: var(--primary);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    /* Horizontal Queue Container */
+    .queue-track-wrapper {
+      overflow-x: auto;
+      padding: 12px 4px 20px;
+      scrollbar-width: thin;
+    }
+
+    .queue-track {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      min-height: 140px;
+      padding: 8px 12px;
+      background-color: var(--white);
+      border: 1px solid var(--slate-200);
+      border-radius: var(--radius-sm);
+      box-shadow: inset 0 2px 4px rgba(0,0,0,0.03);
+      position: relative;
+    }
+
+    .service-counter-zone {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-width: 90px;
+      height: 110px;
+      background-color: #ecfdf5;
+      border: 2px solid #6ee7b7;
+      border-radius: var(--radius-sm);
+      color: #065f46;
+      font-size: 0.78rem;
+      font-weight: 700;
+      text-align: center;
+      padding: 8px;
+      user-select: none;
+      box-shadow: var(--shadow-sm);
+    }
+    .service-counter-zone .icon {
+      font-size: 1.8rem;
+      margin-bottom: 4px;
+    }
+
+    .empty-placeholder {
+      flex: 1;
+      text-align: center;
+      color: var(--slate-400);
+      font-size: 0.95rem;
+      font-style: italic;
+      padding: 30px 10px;
+    }
+
+    /* Queue Element Node */
+    .queue-node {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      min-width: 105px;
+      width: 105px;
+      background: var(--white);
+      border: 2px solid var(--slate-300);
+      border-radius: var(--radius-sm);
+      padding: 10px 8px;
+      box-shadow: var(--shadow-sm);
+      position: relative;
+      transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+      animation: enterQueue 0.35s ease-out;
+    }
+
+    @keyframes enterQueue {
+      from {
+        opacity: 0;
+        transform: translateX(40px) scale(0.85);
+      }
+      to {
+        opacity: 1;
+        transform: translateX(0) scale(1);
+      }
+    }
+
+    .queue-node.leaving {
+      animation: exitQueue 0.35s forwards ease-in;
+    }
+
+    @keyframes exitQueue {
+      to {
+        opacity: 0;
+        transform: translateX(-40px) scale(0.7);
+      }
+    }
+
+    .queue-node.is-front {
+      border-color: var(--emerald);
+      background-color: #f0fdf4;
+      box-shadow: 0 0 0 2px rgba(5, 150, 105, 0.2);
+    }
+
+    .queue-node.is-rear {
+      border-color: var(--primary);
+      background-color: #eef2ff;
+    }
+
+    .queue-node.is-both {
+      border-color: #7c3aed;
+      background-color: #f5f3ff;
+      box-shadow: 0 0 0 2px rgba(124, 58, 237, 0.2);
+    }
+
+    .queue-node.is-peeked {
+      animation: pulsePeek 0.6s infinite alternate;
+      border-color: #f59e0b !important;
+      background-color: #fffbeb !important;
+    }
+
+    @keyframes pulsePeek {
+      from { transform: scale(1); }
+      to { transform: scale(1.06); }
+    }
+
+    .node-index-badge {
+      position: absolute;
+      top: -10px;
+      left: 50%;
+      transform: translateX(-50%);
+      font-size: 0.68rem;
+      font-weight: 800;
+      background: var(--slate-800);
+      color: var(--white);
+      padding: 1px 7px;
+      border-radius: var(--radius-full);
+      white-space: nowrap;
+    }
+
+    .node-avatar {
+      width: 38px;
+      height: 38px;
+      border-radius: 50%;
+      background: #e2e8f0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.1rem;
+      margin: 8px 0 4px;
+    }
+
+    .node-name {
+      font-size: 0.88rem;
+      font-weight: 700;
+      color: var(--slate-900);
+      text-align: center;
+      width: 100%;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .node-role-tag {
+      font-size: 0.68rem;
+      font-weight: 800;
+      padding: 2px 6px;
+      border-radius: 4px;
+      margin-top: 6px;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+    }
+
+    .tag-front {
+      background: var(--emerald-light);
+      color: #065f46;
+    }
+    .tag-rear {
+      background: var(--primary-light);
+      color: var(--primary-hover);
+    }
+    .tag-both {
+      background: #ede9fe;
+      color: #6b21a8;
+    }
+    .tag-mid {
+      background: var(--slate-100);
+      color: var(--slate-500);
+    }
+
+    /* Interactive Controls */
+    .controls-panel {
+      background-color: var(--white);
+      border: 1px solid var(--slate-200);
+      border-radius: var(--radius-md);
+      padding: 20px;
+      margin-bottom: 20px;
+    }
+
+    .input-row {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 14px;
+    }
+    @media (max-width: 540px) {
+      .input-row {
+        flex-direction: column;
+      }
+    }
+
+    .input-text {
+      flex: 1;
+      padding: 11px 16px;
+      font-size: 0.95rem;
+      border: 1.5px solid var(--slate-300);
+      border-radius: var(--radius-sm);
+      outline: none;
+      transition: border-color 0.2s;
+    }
+    .input-text:focus {
+      border-color: var(--primary);
+      box-shadow: 0 0 0 3px rgba(67, 56, 202, 0.15);
+    }
+
+    .btn {
+      padding: 11px 20px;
+      font-size: 0.92rem;
+      font-weight: 600;
+      border-radius: var(--radius-sm);
+      border: none;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      transition: all 0.2s;
+      white-space: nowrap;
+    }
+    .btn:active {
+      transform: scale(0.98);
+    }
+    .btn:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+      transform: none !important;
+    }
+
+    .btn-primary {
+      background-color: var(--primary);
+      color: var(--white);
+    }
+    .btn-primary:hover:not(:disabled) {
+      background-color: var(--primary-hover);
+    }
+
+    .btn-emerald {
+      background-color: var(--emerald);
+      color: var(--white);
+    }
+    .btn-emerald:hover:not(:disabled) {
+      background-color: #047857;
+    }
+
+    .btn-outline {
+      background-color: var(--white);
+      color: var(--slate-700);
+      border: 1px solid var(--slate-300);
+    }
+    .btn-outline:hover:not(:disabled) {
+      background-color: var(--slate-50);
+      color: var(--slate-900);
+    }
+
+    .btn-ghost-danger {
+      background: transparent;
+      color: var(--rose);
+      border: 1px solid #fecdd3;
+    }
+    .btn-ghost-danger:hover:not(:disabled) {
+      background: var(--rose-light);
+    }
+
+    .action-button-grid {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .quick-preset-row {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-top: 14px;
+      padding-top: 12px;
+      border-top: 1px solid var(--slate-100);
+      flex-wrap: wrap;
+    }
+    .preset-label {
+      font-size: 0.8rem;
+      color: var(--slate-500);
+      font-weight: 600;
+    }
+    .preset-chip {
+      background: var(--slate-100);
+      border: 1px solid var(--slate-200);
+      color: var(--slate-700);
+      font-size: 0.8rem;
+      padding: 3px 9px;
+      border-radius: var(--radius-full);
+      cursor: pointer;
+      transition: all 0.15s;
+    }
+    .preset-chip:hover {
+      background: var(--primary-light);
+      color: var(--primary);
+      border-color: #c7d2fe;
+    }
+
+    /* Explanation & Activity Log */
+    .edu-status-banner {
+      background-color: #f8fafc;
+      border: 1px solid var(--slate-200);
+      border-radius: var(--radius-sm);
+      padding: 14px 18px;
+      margin-bottom: 16px;
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+    }
+    .edu-status-banner.banner-success {
+      background-color: #f0fdf4;
+      border-color: #bbf7d0;
+    }
+    .edu-status-banner.banner-warning {
+      background-color: #fffbeb;
+      border-color: #fde68a;
+    }
+    .edu-status-banner.banner-danger {
+      background-color: #fff1f2;
+      border-color: #fecdd3;
+    }
+    .banner-icon {
+      font-size: 1.3rem;
+      line-height: 1;
+      margin-top: 2px;
+    }
+    .banner-text h4 {
+      font-size: 0.95rem;
+      font-weight: 700;
+      color: var(--slate-900);
+      margin-bottom: 2px;
+    }
+    .banner-text p {
+      font-size: 0.88rem;
+      color: var(--slate-600);
+      margin: 0;
+    }
+
+    .log-container {
+      background-color: var(--slate-900);
+      color: #e2e8f0;
+      border-radius: var(--radius-sm);
+      padding: 14px 16px;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+      font-size: 0.82rem;
+      max-height: 160px;
+      overflow-y: auto;
+    }
+    .log-item {
+      padding: 3px 0;
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+      display: flex;
+      gap: 8px;
+    }
+    .log-item:last-child {
+      border-bottom: none;
+    }
+    .log-time {
+      color: #94a3b8;
+      user-select: none;
+    }
+    .log-msg.highlight-in {
+      color: #93c5fd;
+    }
+    .log-msg.highlight-out {
+      color: #86efac;
+    }
+    .log-msg.highlight-alert {
+      color: #fca5a5;
+    }
+
+    /* Mini Quiz */
+    .quiz-card {
+      background: var(--white);
+      border: 1px solid var(--slate-200);
+      border-radius: var(--radius-md);
+      padding: 22px;
+      margin-top: 20px;
+    }
+    .quiz-question {
+      font-size: 0.98rem;
+      font-weight: 600;
+      color: var(--slate-900);
+      margin-bottom: 12px;
+    }
+    .quiz-options {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+    .quiz-opt-btn {
+      text-align: left;
+      padding: 10px 14px;
+      background: var(--slate-50);
+      border: 1px solid var(--slate-200);
+      border-radius: var(--radius-sm);
+      font-size: 0.9rem;
+      color: var(--slate-700);
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .quiz-opt-btn:hover {
+      background: var(--slate-100);
+      border-color: var(--slate-300);
+    }
+    .quiz-feedback {
+      margin-top: 12px;
+      padding: 10px 14px;
+      border-radius: var(--radius-sm);
+      font-size: 0.88rem;
+      display: none;
+    }
+    .quiz-feedback.correct {
+      display: block;
+      background: #ecfdf5;
+      color: #065f46;
+      border: 1px solid #a7f3d0;
+    }
+    .quiz-feedback.incorrect {
+      display: block;
+      background: #fff1f2;
+      color: #9f1239;
+      border: 1px solid #fecdd3;
+    }
+
+    /* Footer */
+    footer.main-footer {
+      text-align: center;
+      padding: 24px 16px;
+      font-size: 0.85rem;
+      color: var(--slate-500);
+      border-top: 1px solid var(--slate-200);
+      background-color: var(--white);
+    }
+  </style>
+</head>
+<body>
+
+  <div class="app-container">
+    <!-- Header -->
+    <header class="main-header">
+      <span class="header-badge">
+        <span>📚</span> E-Modul Informatika • Fase E (Kelas 10 SMA)
+      </span>
+      <h1>Struktur Data Queue (Antrean)</h1>
+      <p>Pelajari konsep fundamental <strong>First In First Out (FIFO)</strong>, visualisasi operasi Enqueue &amp; Dequeue, serta penerapannya dalam pemecahan masalah komputasional.</p>
+    </header>
+
+    <!-- Nav Tabs -->
+    <nav class="nav-tabs" role="tablist">
+      <button class="tab-btn active" id="tabBtn1" onclick="switchTab('tab1')" role="tab" aria-selected="true" aria-controls="tab1">
+        <span>📖</span> 1. Materi &amp; Konsep
+      </button>
+      <button class="tab-btn" id="tabBtn2" onclick="switchTab('tab2')" role="tab" aria-selected="false" aria-controls="tab2">
+        <span>🎬</span> 2. Video Pembelajaran
+      </button>
+      <button class="tab-btn" id="tabBtn3" onclick="switchTab('tab3')" role="tab" aria-selected="false" aria-controls="tab3">
+        <span>🧪</span> 3. Simulasi Interaktif
+      </button>
+    </nav>
+
+    <!-- ==================== TAB 1: MATERI & KONSEP ==================== -->
+    <section id="tab1" class="tab-panel active" role="tabpanel" aria-labelledby="tabBtn1">
+      <div class="card">
+        <h2 class="card-title">
+          <span class="icon">💡</span> Apa itu Queue (Antrean)?
+        </h2>
+        <p>Dalam ilmu komputer dan berpikir komputasional, <strong>Queue</strong> adalah struktur data linier yang menyimpan sekumpulan elemen data dengan aturan khusus: elemen yang <em>pertama kali masuk</em> akan menjadi elemen yang <em>pertama kali keluar</em> atau dilayani.</p>
+        
+        <div class="highlight-box">
+          <strong>Prinsip Utama: FIFO (First In, First Out)</strong>
+          Artinya siapa yang datang lebih dulu akan berada di barisan paling depan dan diproses terlebih dahulu. Elemen yang datang belakangan harus menunggu di bagian paling belakang hingga semua yang di depannya selesai dilayani.
+        </div>
+
+        <p>Queue memiliki dua penunjuk (pointer) penting yang selalu dicatat sistem:</p>
+        <ul style="padding-left: 20px; margin-top: 8px; font-size: 0.95rem; color: var(--slate-700);">
+          <li><strong>Front (Head):</strong> Posisi ujung depan antrean tempat elemen akan dikeluarkan atau dilayani.</li>
+          <li><strong>Rear (Tail):</strong> Posisi ujung belakang antrean tempat elemen baru dimasukkan.</li>
+        </ul>
+      </div>
+
+      <!-- Dua Operasi Utama -->
+      <div class="card">
+        <h2 class="card-title">
+          <span class="icon">⚙️</span> Dua Operasi Utama Queue
+        </h2>
+        <div class="concept-grid">
+          <div class="operation-card">
+            <span class="op-tag op-enqueue">Operasi 1</span>
+            <h3>📥 Enqueue (Menambah Data)</h3>
+            <p>Operasi untuk memasukkan atau menambahkan elemen baru ke dalam antrean. Elemen baru selalu ditempatkan di posisi paling belakang (<strong>Rear</strong>). Nilai penunjuk Rear akan bertambah satu.</p>
+          </div>
+          <div class="operation-card">
+            <span class="op-tag op-dequeue">Operasi 2</span>
+            <h3>📤 Dequeue (Mengeluarkan Data)</h3>
+            <p>Operasi untuk mengeluarkan atau memproses elemen yang berada di posisi paling depan (<strong>Front</strong>). Setelah elemen depan selesai diproses, giliran dilanjutkan ke elemen berikutnya.</p>
+          </div>
+        </div>
+
+        <div style="background-color: var(--slate-50); border: 1px solid var(--slate-200); border-radius: var(--radius-sm); padding: 14px 16px; margin-top: 14px; font-size: 0.9rem;">
+          <strong style="color: var(--slate-800);">Operasi Pendukung Lainnya:</strong>
+          <span style="display: block; margin-top: 4px; color: var(--slate-600);">
+            • <strong>Peek / Front:</strong> Melihat data terdepan tanpa menghapusnya.<br>
+            • <strong>IsEmpty:</strong> Memeriksa apakah antrean sedang kosong (menghindari <em>Queue Underflow</em>).<br>
+            • <strong>IsFull:</strong> Memeriksa apakah antrean sudah mencapai batas maksimal (menghindari <em>Queue Overflow</em>).
+          </span>
+        </div>
+      </div>
+
+      <!-- Contoh Kontekstual Sehari-hari -->
+      <div class="card">
+        <h2 class="card-title">
+          <span class="icon">🏘️</span> Contoh Kontekstual dalam Kehidupan Nyata
+        </h2>
+        <p>Prinsip antrean menjaga ketertiban, keadilan, dan efisiensi baik dalam kehidupan bermasyarakat maupun sistem digital:</p>
+        <div class="real-world-list">
+          <div class="real-world-item">
+            <h4>📦 Posko Bantuan Bencana</h4>
+            <p>Warga yang tiba lebih awal di posko darurat didata dan menerima pembagian paket sembako terlebih dahulu agar distribusi tertib tanpa berebut.</p>
+          </div>
+          <div class="real-world-item">
+            <h4>🛒 Kasir Supermarket / Kantin</h4>
+            <p>Pembeli yang sudah selesai memilih barang berdiri berbaris di depan kasir; pembeli terdepan membayar dan meninggalkan kasir lebih dulu.</p>
+          </div>
+          <div class="real-world-item">
+            <h4>🖨️ Printer Spooler (Komputer)</h4>
+            <p>Ketika banyak siswa mencetak tugas bersamaan ke printer sekolah, dokumen yang dikirim pertama kali akan dicetak terlebih dahulu.</p>
+          </div>
+          <div class="real-world-item">
+            <h4>🎟️ Loket Tiket Bioskop / Kereta</h4>
+            <p>Sistem antrean nomor giliran memastikan calon penumpang dipanggil berurutan dari nomor terkecil hingga nomor terbaru.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Perbedaan Queue vs Stack -->
+      <div class="card">
+        <h2 class="card-title">
+          <span class="icon">⚖️</span> Perbedaan Singkat: Queue vs Stack
+        </h2>
+        <p>Sering kali siswa tertukar antara <strong>Queue (Antrean)</strong> dan <strong>Stack (Tumpukan)</strong>. Perhatikan tabel perbandingan berikut:</p>
+        <div class="compare-table-wrapper">
+          <table class="compare-table">
+            <thead>
+              <tr>
+                <th>Aspek</th>
+                <th>Queue (Antrean)</th>
+                <th>Stack (Tumpukan)</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>Prinsip Kerja</strong></td>
+                <td>FIFO (First In, First Out)</td>
+                <td>LIFO (Last In, First Out)</td>
+              </tr>
+              <tr>
+                <td><strong>Titik Akses</strong></td>
+                <td>2 Ujung (Masuk di Rear, Keluar di Front)</td>
+                <td>1 Ujung saja (Top / Puncak)</td>
+              </tr>
+              <tr>
+                <td><strong>Operasi Utama</strong></td>
+                <td>Enqueue &amp; Dequeue</td>
+                <td>Push &amp; Pop</td>
+              </tr>
+              <tr>
+                <td><strong>Analog Kasus</strong></td>
+                <td>Barisan kasir, printer spooler</td>
+                <td>Tumpukan piring kotor, undo/redo text editor</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- Kuis Mini Refleksi Konsep -->
+      <div class="quiz-card">
+        <h3 style="font-size: 1.1rem; color: var(--slate-900); margin-bottom: 6px;">🧠 Uji Pemahaman Cepat (Refleksi)</h3>
+        <p class="quiz-question">Jika lima orang (A, B, C, D, E) masuk secara berurutan ke antrean posko darurat, siapakah yang akan menerima bantuan pertama kali dan siapa yang keluar terakhir?</p>
+        <div class="quiz-options">
+          <button class="quiz-opt-btn" onclick="checkQuiz(1, false)">A. E pertama kali, A terakhir (Prinsip LIFO)</button>
+          <button class="quiz-opt-btn" onclick="checkQuiz(1, true)">B. A pertama kali, E terakhir (Prinsip FIFO)</button>
+          <button class="quiz-opt-btn" onclick="checkQuiz(1, false)">C. C pertama kali karena berada di posisi tengah</button>
+        </div>
+        <div id="quizFeedback1" class="quiz-feedback"></div>
+      </div>
+    </section>
+
+    <!-- ==================== TAB 2: VIDEO PEMBELAJARAN ==================== -->
+    <section id="tab2" class="tab-panel" role="tabpanel" aria-labelledby="tabBtn2">
+      <div class="card">
+        <h2 class="card-title">
+          <span class="icon">🎥</span> Video Pembelajaran: Struktur Data Queue
+        </h2>
+        <p style="margin-bottom: 16px;">Tonton video pembelajaran berikut untuk memperdalam pemahaman konsep visual dan logika pemrograman antrean:</p>
+        
+        <div class="video-wrapper">
+          <iframe 
+            src="https://www.youtube.com/embed/-sI8mkIJvR4" 
+            title="Video Pembelajaran Struktur Data Queue" 
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
+            allowfullscreen>
+          </iframe>
+        </div>
+
+        <div class="guide-box">
+          <h4>📝 Panduan Menyimak untuk Siswa</h4>
+          <ol>
+            <li>Perhatikan bagaimana penunjuk <strong>Front</strong> dan <strong>Rear</strong> berpindah saat terjadi penambahan data.</li>
+            <li>Amati mengapa elemen baru tidak boleh menyela ke bagian depan (karena melanggar prinsip keadilan komputasi FIFO).</li>
+            <li>Catat apa yang terjadi jika sistem mencoba melakukan <em>Dequeue</em> pada antrean yang sedang kosong.</li>
+          </ol>
+        </div>
+      </div>
+
+      <div class="card">
+        <h2 class="card-title">
+          <span class="icon">📌</span> Rangkuman Poin Kunci Video
+        </h2>
+        <ul style="padding-left: 20px; font-size: 0.93rem; color: var(--slate-700); line-height: 1.7;">
+          <li>Queue adalah struktur data linier yang memodelkan proses antrean nyata di dunia komputasi modern (seperti task scheduler CPU, pengiriman paket jaringan internet, dan web server requests).</li>
+          <li>Kunci utama efisiensi antrean terletak pada pemeliharaan indeks <strong>Front</strong> dan <strong>Rear</strong> secara konsisten.</li>
+          <li>Setelah menyimak video, ujilah pemahaman Anda secara langsung pada <strong>Tab 3: Simulasi Interaktif</strong>!</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- ==================== TAB 3: SIMULASI INTERAKTIF ==================== -->
+    <section id="tab3" class="tab-panel" role="tabpanel" aria-labelledby="tabBtn3">
+      
+      <!-- Metrics Bar -->
+      <div class="sim-metrics-bar">
+        <div class="metric-pill">
+          <div class="metric-label">Jumlah Antrean (Size)</div>
+          <div class="metric-val" id="metricSize">0 / 6</div>
+        </div>
+        <div class="metric-pill">
+          <div class="metric-label">Status Antrean</div>
+          <div class="metric-val" id="metricStatus" style="color: var(--slate-600);">Kosong</div>
+        </div>
+        <div class="metric-pill">
+          <div class="metric-label">Elemen Front (Depan)</div>
+          <div class="metric-val" id="metricFront" style="color: var(--emerald);">-</div>
+        </div>
+        <div class="metric-pill">
+          <div class="metric-label">Elemen Rear (Belakang)</div>
+          <div class="metric-val" id="metricRear" style="color: var(--primary);">-</div>
+        </div>
+      </div>
+
+      <!-- Queue Visual Arena -->
+      <div class="queue-stage-card">
+        <div class="flow-indicators">
+          <div class="flow-out">
+            <span>⬅️ KELUAR (Dequeue)</span>
+          </div>
+          <div style="color: var(--slate-500); font-weight: 600; font-size: 0.78rem;">
+            ARAH ALIRAN ANTREAN (FIFO)
+          </div>
+          <div class="flow-in">
+            <span>MASUK (Enqueue) ⬅️</span>
+          </div>
+        </div>
+
+        <div class="queue-track-wrapper">
+          <div class="queue-track" id="queueTrack">
+            <!-- Loket Layanan (Sisi Kiri / Front) -->
+            <div class="service-counter-zone">
+              <span class="icon">🏢</span>
+              <span>LOKET LAYANAN</span>
+              <span style="font-size: 0.65rem; color: #047857; font-weight: 600;">(Siap Melayani)</span>
+            </div>
+
+            <!-- Dynamic Queue Nodes Container -->
+            <div id="nodesContainer" style="display: flex; align-items: center; gap: 10px;">
+              <div class="empty-placeholder" id="emptyPlaceholder">
+                Antrean saat ini masih kosong. Masukkan nama lalu klik tombol "Enqueue"!
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Controls Panel -->
+      <div class="controls-panel">
+        <h3 style="font-size: 1.05rem; font-weight: 700; color: var(--slate-900); margin-bottom: 12px;">
+          🎮 Kontrol Antrean
+        </h3>
+        
+        <div class="input-row">
+          <input 
+            type="text" 
+            id="elementInput" 
+            class="input-text" 
+            placeholder="Ketik nama (contoh: Siti, Budi, Warga-01)..." 
+            maxlength="15" 
+            onkeydown="if(event.key==='Enter') handleEnqueue()"
+          />
+          <button class="btn btn-primary" id="btnEnqueue" onclick="handleEnqueue()">
+            <span>📥</span> Enqueue (Masuk Belakang)
+          </button>
+          <button class="btn btn-emerald" id="btnDequeue" onclick="handleDequeue()">
+            <span>📤</span> Dequeue (Layani Depan)
+          </button>
+        </div>
+
+        <div class="action-button-grid">
+          <button class="btn btn-outline" onclick="handlePeek()">
+            <span>👀</span> Peek (Lihat Depan)
+          </button>
+          <button class="btn btn-outline" onclick="fillPresetData()">
+            <span>⚡</span> Isi Contoh Data
+          </button>
+          <button class="btn btn-ghost-danger" onclick="clearQueue()">
+            <span>🗑️</span> Kosongkan Antrean
+          </button>
+        </div>
+
+        <!-- Quick Presets -->
+        <div class="quick-preset-row">
+          <span class="preset-label">Tambah Cepat:</span>
+          <button class="preset-chip" onclick="quickAdd('Ahmad')">+ Ahmad</button>
+          <button class="preset-chip" onclick="quickAdd('Siti Rahma')">+ Siti Rahma</button>
+          <button class="preset-chip" onclick="quickAdd('Budi Santoso')">+ Budi Santoso</button>
+          <button class="preset-chip" onclick="quickAdd('Dewi Lestari')">+ Dewi Lestari</button>
+          <button class="preset-chip" onclick="quickAdd('Eko Prasetyo')">+ Eko Prasetyo</button>
+        </div>
+      </div>
+
+      <!-- Educational Explanation & Activity Log -->
+      <div class="card">
+        <h3 class="card-title" style="margin-bottom: 10px;">
+          <span class="icon">💬</span> Penjelasan Operasi Terakhir
+        </h3>
+        <div id="eduBanner" class="edu-status-banner">
+          <span class="banner-icon" id="eduBannerIcon">💡</span>
+          <div class="banner-text">
+            <h4 id="eduBannerTitle">Selamat Datang di Simulasi Antrean</h4>
+            <p id="eduBannerDesc">Gunakan tombol <strong>Enqueue</strong> untuk menambahkan elemen ke ujung belakang (Rear), dan tombol <strong>Dequeue</strong> untuk melayani elemen paling depan (Front).</p>
+          </div>
+        </div>
+
+        <h4 style="font-size: 0.88rem; text-transform: uppercase; color: var(--slate-500); letter-spacing: 0.04em; margin-bottom: 8px;">
+          📜 Catatan Log Aktivitas (Riwayat Sistem):
+        </h4>
+        <div class="log-container" id="logBox">
+          <div class="log-item">
+            <span class="log-time">[System]</span>
+            <span class="log-msg">Simulasi antrean siap digunakan. Kapasitas maksimum: 6 elemen.</span>
+          </div>
+        </div>
+      </div>
+
+    </section>
+  </div>
+
+  <!-- Footer -->
+  <footer class="main-footer">
+    <p>Media Pembelajaran Digital Informatika SMA Kelas 10 (Fase E) • Berpikir Komputasional</p>
+    <p style="margin-top: 4px; font-size: 0.78rem; color: var(--slate-400);">Dibuat dengan HTML, CSS, &amp; JavaScript Native murni tanpa dependensi eksternal.</p>
+  </footer>
+
+  <!-- ==================== JAVASCRIPT LOGIC ==================== -->
+  <script>
+    // --- State Management ---
+    const MAX_CAPACITY = 6;
+    let queue = [];
+    const avatarList = ['🧑‍🎓', '👩‍🎓', '👨‍💼', '👩‍💼', '🧑‍💻', '👩‍⚕️', '👨‍🏫', '🧕', '🧔'];
+
+    // --- Tab Navigation ---
+    function switchTab(tabId) {
+      const tabs = ['tab1', 'tab2', 'tab3'];
+      const btns = ['tabBtn1', 'tabBtn2', 'tabBtn3'];
+      
+      tabs.forEach((id, index) => {
+        const panel = document.getElementById(id);
+        const btn = document.getElementById(btns[index]);
+        if (id === tabId) {
+          panel.classList.add('active');
+          btn.classList.add('active');
+          btn.setAttribute('aria-selected', 'true');
+        } else {
+          panel.classList.remove('active');
+          btn.classList.remove('active');
+          btn.setAttribute('aria-selected', 'false');
+        }
+      });
+    }
+
+    // --- Log Helper ---
+    function addLog(msg, type = 'normal') {
+      const logBox = document.getElementById('logBox');
+      const timeStr = new Date().toLocaleTimeString('id-ID', { hour: '2-digit', minute: '2-digit', second: '2-digit' });
+      
+      const item = document.createElement('div');
+      item.className = 'log-item';
+      
+      let typeClass = '';
+      if (type === 'in') typeClass = 'highlight-in';
+      else if (type === 'out') typeClass = 'highlight-out';
+      else if (type === 'alert') typeClass = 'highlight-alert';
+      
+      item.innerHTML = `
+        <span class="log-time">[${timeStr}]</span>
+        <span class="log-msg ${typeClass}">${msg}</span>
+      `;
+      logBox.insertBefore(item, logBox.firstChild);
+    }
+
+    // --- Educational Status Banner ---
+    function updateEduBanner(title, desc, status = 'info') {
+      const banner = document.getElementById('eduBanner');
+      const icon = document.getElementById('eduBannerIcon');
+      const titleEl = document.getElementById('eduBannerTitle');
+      const descEl = document.getElementById('eduBannerDesc');
+
+      banner.className = 'edu-status-banner';
+      if (status === 'success') {
+        banner.classList.add('banner-success');
+        icon.textContent = '✅';
+      } else if (status === 'warning') {
+        banner.classList.add('banner-warning');
+        icon.textContent = '⚠️';
+      } else if (status === 'danger') {
+        banner.classList.add('banner-danger');
+        icon.textContent = '🛑';
+      } else {
+        icon.textContent = '💡';
+      }
+
+      titleEl.textContent = title;
+      descEl.innerHTML = desc;
+    }
+
+    // --- Render Queue Visuals ---
+    function renderQueue() {
+      const container = document.getElementById('nodesContainer');
+      const emptyPlaceholder = document.getElementById('emptyPlaceholder');
+      const sizeEl = document.getElementById('metricSize');
+      const statusEl = document.getElementById('metricStatus');
+      const frontEl = document.getElementById('metricFront');
+      const rearEl = document.getElementById('metricRear');
+      const btnEnqueue = document.getElementById('btnEnqueue');
+      const btnDequeue = document.getElementById('btnDequeue');
+
+      // Update Metrics
+      sizeEl.textContent = `${queue.length} / ${MAX_CAPACITY}`;
+      
+      if (queue.length === 0) {
+        statusEl.textContent = 'Kosong';
+        statusEl.style.color = 'var(--slate-500)';
+        frontEl.textContent = '-';
+        rearEl.textContent = '-';
+        btnDequeue.disabled = true;
+        btnEnqueue.disabled = false;
+      } else if (queue.length >= MAX_CAPACITY) {
+        statusEl.textContent = 'Penuh (Full)';
+        statusEl.style.color = 'var(--rose)';
+        frontEl.textContent = queue[0].name;
+        rearEl.textContent = queue[queue.length - 1].name;
+        btnDequeue.disabled = false;
+        btnEnqueue.disabled = true;
+      } else {
+        statusEl.textContent = 'Tersedia';
+        statusEl.style.color = 'var(--emerald)';
+        frontEl.textContent = queue[0].name;
+        rearEl.textContent = queue[queue.length - 1].name;
+        btnDequeue.disabled = false;
+        btnEnqueue.disabled = false;
+      }
+
+      // Render Nodes
+      if (queue.length === 0) {
+        container.innerHTML = `
+          <div class="empty-placeholder" id="emptyPlaceholder">
+            Antrean saat ini masih kosong. Masukkan nama lalu klik tombol "Enqueue"!
+          </div>
+        `;
+        return;
+      }
+
+      container.innerHTML = '';
+      queue.forEach((item, index) => {
+        const isFront = index === 0;
+        const isRear = index === queue.length - 1;
+        const isBoth = isFront && isRear;
+
+        let roleClass = 'tag-mid';
+        let roleText = `Posisi #${index + 1}`;
+        let cardClass = '';
+
+        if (isBoth) {
+          roleClass = 'tag-both';
+          roleText = 'FRONT & REAR';
+          cardClass = 'is-both';
+        } else if (isFront) {
+          roleClass = 'tag-front';
+          roleText = 'FRONT (Depan)';
+          cardClass = 'is-front';
+        } else if (isRear) {
+          roleClass = 'tag-rear';
+          roleText = 'REAR (Ekor)';
+          cardClass = 'is-rear';
+        }
+
+        const node = document.createElement('div');
+        node.id = `node-${item.id}`;
+        node.className = `queue-node ${cardClass}`;
+        node.innerHTML = `
+          <div class="node-index-badge">Indeks [${index}]</div>
+          <div class="node-avatar">${item.avatar}</div>
+          <div class="node-name" title="${item.name}">${item.name}</div>
+          <span class="node-role-tag ${roleClass}">${roleText}</span>
+        `;
+        container.appendChild(node);
+      });
+    }
+
+    // --- Enqueue Operation ---
+    function handleEnqueue(customName = null) {
+      const inputEl = document.getElementById('elementInput');
+      const name = (customName || inputEl.value).trim();
+
+      if (!name) {
+        updateEduBanner(
+          'Nama Masih Kosong',
+          'Silakan ketikkan nama orang/elemen terlebih dahulu sebelum menekan tombol <strong>Enqueue</strong>.',
+          'warning'
+        );
+        inputEl.focus();
+        return;
+      }
+
+      if (queue.length >= MAX_CAPACITY) {
+        updateEduBanner(
+          'Queue Overflow (Antrean Penuh!)',
+          `Kapasitas maksimum antrean adalah <strong>${MAX_CAPACITY}</strong> elemen. Dalam istilah informatika, kondisi ini disebut <em>Queue Overflow</em>. Selesaikan dulu elemen terdepan melalui <strong>Dequeue</strong>.`,
+          'danger'
+        );
+        addLog(`Gagal Enqueue: Antrean penuh (${MAX_CAPACITY}/${MAX_CAPACITY}). Terjadi Queue Overflow.`, 'alert');
+        return;
+      }
+
+      const randomAvatar = avatarList[Math.floor(Math.random() * avatarList.length)];
+      const newItem = {
+        id: Date.now() + Math.random().toString(36).substr(2, 4),
+        name: name,
+        avatar: randomAvatar
+      };
+
+      queue.push(newItem);
+      inputEl.value = '';
+      renderQueue();
+
+      const newIndex = queue.length - 1;
+      updateEduBanner(
+        `Berhasil Enqueue: "${name}"`,
+        `<strong>"${name}"</strong> masuk ke barisan paling belakang (<strong>REAR</strong> pada indeks [${newIndex}]). Panjang antrean bertambah menjadi <strong>${queue.length}</strong>.`,
+        'success'
+      );
+      addLog(`[ENQUEUE] "${name}" masuk di posisi REAR (Indeks ${newIndex}). Ukuran antrean: ${queue.length}.`, 'in');
+    }
+
+    // --- Dequeue Operation ---
+    function handleDequeue() {
+      if (queue.length === 0) {
+        updateEduBanner(
+          'Queue Underflow (Antrean Kosong!)',
+          'Tidak ada elemen yang dapat dikeluarkan atau dilayani karena antrean kosong. Dalam ilmu komputer, kondisi ini disebut <em>Queue Underflow</em>.',
+          'danger'
+        );
+        addLog('Gagal Dequeue: Antrean kosong (0 elemen). Terjadi Queue Underflow.', 'alert');
+        return;
+      }
+
+      // First item is front
+      const servedItem = queue[0];
+      const nodeEl = document.getElementById(`node-${servedItem.id}`);
+
+      if (nodeEl) {
+        nodeEl.classList.add('leaving');
+      }
+
+      setTimeout(() => {
+        queue.shift(); // Remove from front
+        renderQueue();
+
+        const nextFrontText = queue.length > 0 ? `Sekarang <strong>"${queue[0].name}"</strong> maju menjadi FRONT berikutnya.` : 'Antrean sekarang kembali kosong.';
+
+        updateEduBanner(
+          `Berhasil Dequeue: "${servedItem.name}" Dilayani`,
+          `Sesuai prinsip <strong>FIFO (First In First Out)</strong>, <strong>"${servedItem.name}"</strong> keluar dari posisi <strong>FRONT</strong> karena dia yang datang lebih awal. ${nextFrontText}`,
+          'success'
+        );
+        addLog(`[DEQUEUE] "${servedItem.name}" selesai dilayani dan keluar dari FRONT. Sisa antrean: ${queue.length}.`, 'out');
+      }, 250);
+    }
+
+    // --- Peek Operation ---
+    function handlePeek() {
+      if (queue.length === 0) {
+        updateEduBanner(
+          'Antrean Sedang Kosong',
+          'Operasi <em>Peek</em> digunakan untuk melihat siapa yang ada di posisi <strong>FRONT</strong> tanpa mengeluarkannya. Namun antrean saat ini masih kosong.',
+          'warning'
+        );
+        return;
+      }
+
+      const frontItem = queue[0];
+      const frontNode = document.getElementById(`node-${frontItem.id}`);
+      
+      if (frontNode) {
+        frontNode.classList.add('is-peeked');
+        setTimeout(() => {
+          frontNode.classList.remove('is-peeked');
+        }, 1200);
+      }
+
+      updateEduBanner(
+        `Operasi Peek: Melihat Front`,
+        `Elemen yang berada di posisi <strong>FRONT</strong> saat ini adalah <strong>"${frontItem.name}"</strong>. Operasi Peek hanya memeriksa data terdepan tanpa mengubah susunan antrean.`,
+        'info'
+      );
+      addLog(`[PEEK] Menginspeksi elemen FRONT: "${frontItem.name}" (Antrean tidak berubah).`);
+    }
+
+    // --- Helper Actions ---
+    function quickAdd(name) {
+      handleEnqueue(name);
+    }
+
+    function fillPresetData() {
+      clearQueue(false);
+      const presets = ['Ahmad', 'Siti Rahma', 'Budi Santoso'];
+      presets.forEach(p => {
+        const randomAvatar = avatarList[Math.floor(Math.random() * avatarList.length)];
+        queue.push({
+          id: Date.now() + Math.random().toString(36).substr(2, 4),
+          name: p,
+          avatar: randomAvatar
+        });
+      });
+      renderQueue();
+      updateEduBanner(
+        'Contoh Data Berhasil Diisi',
+        'Tiga contoh elemen telah dimasukkan: <strong>Ahmad</strong> (Front), <strong>Siti Rahma</strong> (Tengah), dan <strong>Budi Santoso</strong> (Rear). Cobalah tekan tombol Dequeue!',
+        'success'
+      );
+      addLog('[RESET & PRESET] Mengisi 3 data antrean awal (Ahmad, Siti Rahma, Budi Santoso).', 'in');
+    }
+
+    function clearQueue(showBanner = true) {
+      queue = [];
+      renderQueue();
+      if (showBanner) {
+        updateEduBanner(
+          'Antrean Telah Dikosongkan',
+          'Semua elemen telah dibersihkan. Antrean kini dalam keadaan kosong (0 elemen).',
+          'info'
+        );
+        addLog('[CLEAR] Seluruh antrean telah dikosongkan.');
+      }
+    }
+
+    // --- Quiz Checker ---
+    function checkQuiz(quizId, isCorrect) {
+      const feedbackEl = document.getElementById(`quizFeedback${quizId}`);
+      if (isCorrect) {
+        feedbackEl.className = 'quiz-feedback correct';
+        feedbackEl.innerHTML = '🎉 <strong>Tepat sekali!</strong> Berdasarkan prinsip FIFO (First In First Out), orang yang pertama kali datang (A) adalah yang pertama dilayani, sedangkan orang yang terakhir datang (E) berada di ujung Rear dan keluar paling akhir.';
+      } else {
+        feedbackEl.className = 'quiz-feedback incorrect';
+        feedbackEl.innerHTML = '❌ <strong>Kurang tepat.</strong> Ingat prinsip dasar Queue adalah <strong>FIFO (First In, First Out)</strong>: yang pertama masuk dialah yang pertama keluar!';
+      }
+    }
+
+    // Initial load
+    window.addEventListener('DOMContentLoaded', () => {
+      renderQueue();
+    });
+  </script>
+</body>
+</html>

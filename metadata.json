@@ -1,0 +1,6 @@
+{
+  "name": "Media Belajar Antrean (Queue)",
+  "description": "Media pembelajaran interaktif struktur data Queue (Antrean) dengan prinsip FIFO, video edukatif, dan simulasi horizontal interaktif untuk siswa SMA Kelas 10 Fase E.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
